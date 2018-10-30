@@ -2,7 +2,13 @@
   (:gen-class)
   (:require [org.httpkit.server :as server]))
 
+(defn app
+  [req]
+  {:status 200
+   :header {"Content-Type" "text/plain"}
+   :body   "Hello, world!"})
+
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Application entry point"
   [& args]
-  (println "Hello, World!"))
+  (server/run-server app {:port 8080}))
