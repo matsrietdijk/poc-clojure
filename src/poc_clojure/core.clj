@@ -3,6 +3,9 @@
   (:require [org.httpkit.server :as server]
             [ring.middleware.reload :as middleware]))
 
+(def development?
+  true) ; TODO: Get the current application environment from ENV variables/configuration
+
 (defn app
   [req]
   {:status 200
