@@ -9,7 +9,7 @@
 (defn handler
   [req]
   {:status 200
-   :header {"Content-Type" "text/plain"}
+   :headers {"Content-Type" "text/plain"}
    :body   "Hello, world!"})
 
 (def app
