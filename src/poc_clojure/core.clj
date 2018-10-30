@@ -1,7 +1,16 @@
 (ns poc-clojure.core
-  (:gen-class))
+  (:gen-class)
+  (:require [org.httpkit.server :as server]))
+
+(defn app
+  [req]
+  {:status 200
+   :header {"Content-Type" "text/plain"}
+   :body   "Hello, world!"})
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Application entry point"
   [& args]
-  (println "Hello, World!"))
+  (let [port 8080]
+    (server/run-server app {:port port})
+    (println (str "Running webserver at http://127.0.0.1:" port "/"))))
