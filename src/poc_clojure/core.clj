@@ -11,4 +11,5 @@
 (defn -main
   "Application entry point"
   [& args]
-  (server/run-server app {:port 8080}))
+  (server/run-server app {:port 8080})
+  (println "Running webserver at http://127.0.0.1:8080/"))
