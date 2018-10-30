@@ -20,6 +20,6 @@
 (defn -main
   "Application entry point"
   [& args]
-  (let [port 8080]
+  (let [port 8080] ; TODO: Get port from ENV variables/configuration
     (server/run-server app {:port port})
     (println (str "Running webserver at http://127.0.0.1:" port "/"))))
