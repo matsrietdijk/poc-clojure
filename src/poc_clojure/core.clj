@@ -6,15 +6,20 @@
 (def development?
   true) ; TODO: Get the current application environment from ENV variables/configuration
 
-(defn app
+(defn handler
   [req]
   {:status 200
    :header {"Content-Type" "text/plain"}
    :body   "Hello, world!"})
 
+(def app
+  (if development?
+    (middleware/wrap-reload #'handler)
+    (handler)))
+
 (defn -main
   "Application entry point"
   [& args]
   (let [port 8080]
-    (server/run-server (middleware/wrap-reload #'app) {:port port})
+    (server/run-server app {:port port})
     (println (str "Running webserver at http://127.0.0.1:" port "/"))))
