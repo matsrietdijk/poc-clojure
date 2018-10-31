@@ -2,6 +2,7 @@
   (:gen-class)
   (:require [org.httpkit.server :as server]
             [hiccup.page :as template]
+            [hiccup.element :as elem]
             [compojure.core :refer [defroutes context GET]]
             [compojure.route :as route]
             [ring.middleware.reload :as middleware]))
@@ -31,8 +32,13 @@
 
 (defn not-found-handler
   [req]
-  {:headers {"Content-Type" "text/plain"}
-   :body    "Not found."})
+  (template/html5
+    [:head
+     [:meta {:charset "utf-8"}]
+     [:title "PoC | Clojure"]]
+    [:body
+     [:h1 "Not Found."]
+     [:p "The page you requested could not be found. Go back to " (elem/link-to "/" "Home") "."]]))
 
 (defroutes api-routes
   (GET "/" [] api-index-handler)
