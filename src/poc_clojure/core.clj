@@ -2,6 +2,7 @@
   (:gen-class)
   (:require [org.httpkit.server :as server]
             [compojure.core :refer [defroutes GET]]
+            [compojure.route :as route]
             [ring.middleware.reload :as middleware]))
 
 (def development?
@@ -13,8 +14,14 @@
    :headers {"Content-Type" "text/plain"}
    :body   "Hello, world!"})
 
+(defn not-found-handler
+  [req]
+  {:headers {"Content-Type" "text/plain"}
+   :body    "Not found."})
+
 (defroutes routes
-  (GET "/" [] handler))
+  (GET "/" [] handler)
+  (route/not-found not-found-handler))
 
 (def app
   (if development?
