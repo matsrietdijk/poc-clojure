@@ -1,6 +1,7 @@
 (ns poc-clojure.core
   (:gen-class)
   (:require [org.httpkit.server :as server]
+            [compojure.core :refer [defroutes GET]]
             [ring.middleware.reload :as middleware]))
 
 (def development?
@@ -12,10 +13,13 @@
    :headers {"Content-Type" "text/plain"}
    :body   "Hello, world!"})
 
+(defroutes routes
+  (GET "/" [] handler))
+
 (def app
   (if development?
-    (middleware/wrap-reload #'handler)
-    (handler)))
+    (middleware/wrap-reload #'routes)
+    (routes)))
 
 (defn -main
   "Application entry point"
