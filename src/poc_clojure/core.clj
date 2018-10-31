@@ -1,6 +1,7 @@
 (ns poc-clojure.core
   (:gen-class)
   (:require [org.httpkit.server :as server]
+            [hiccup.page :as template]
             [compojure.core :refer [defroutes context GET]]
             [compojure.route :as route]
             [ring.middleware.reload :as middleware]))
@@ -21,9 +22,12 @@
 
 (defn index-handler
   [req]
-  {:status 200
-   :headers {"Content-Type" "text/plain"}
-   :body   "Hello, world!"})
+  (template/html5
+    [:head
+     [:meta {:charset "utf-8"}]
+     [:title "PoC | Clojure"]]
+    [:body
+     [:h1 "Hello, world!"]]))
 
 (defn not-found-handler
   [req]
