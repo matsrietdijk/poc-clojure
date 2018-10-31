@@ -8,7 +8,7 @@
 (def development?
   true) ; TODO: Get the current application environment from ENV variables/configuration
 
-(defn handler
+(defn index-handler
   [req]
   {:status 200
    :headers {"Content-Type" "text/plain"}
@@ -20,7 +20,7 @@
    :body    "Not found."})
 
 (defroutes routes
-  (GET "/" [] handler)
+  (GET "/" [] index-handler)
   (route/not-found not-found-handler))
 
 (def app
