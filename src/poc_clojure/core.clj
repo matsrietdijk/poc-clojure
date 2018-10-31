@@ -1,12 +1,23 @@
 (ns poc-clojure.core
   (:gen-class)
   (:require [org.httpkit.server :as server]
-            [compojure.core :refer [defroutes GET]]
+            [compojure.core :refer [defroutes context GET]]
             [compojure.route :as route]
             [ring.middleware.reload :as middleware]))
 
 (def development?
   true) ; TODO: Get the current application environment from ENV variables/configuration
+
+(defn api-index-handler
+  [req]
+  {:status  501
+   :headers {"Content-Type" "application/json"}
+   :body    "{}"})
+
+(defn api-not-found-handler
+  [req]
+  {:headers {"Content-Type" "application/json"}
+   :body    "{}"})
 
 (defn index-handler
   [req]
@@ -19,8 +30,13 @@
   {:headers {"Content-Type" "text/plain"}
    :body    "Not found."})
 
+(defroutes api-routes
+  (GET "/" [] api-index-handler)
+  (route/not-found api-not-found-handler))
+
 (defroutes routes
   (GET "/" [] index-handler)
+  (context "/api" [] api-routes)
   (route/not-found not-found-handler))
 
 (def app
