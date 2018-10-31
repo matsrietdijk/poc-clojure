@@ -21,24 +21,24 @@
   {:headers {"Content-Type" "application/json"}
    :body    "{}"})
 
-(defn index-handler
-  [req]
+(defn layout
+  [& body]
   (template/html5
     [:head
      [:meta {:charset "utf-8"}]
      [:title "PoC | Clojure"]]
-    [:body
-     [:h1 "Hello, world!"]]))
+    [:body body]))
+
+(defn index-handler
+  [req]
+  (layout
+    [:h1 "Hello, world!"]))
 
 (defn not-found-handler
   [req]
-  (template/html5
-    [:head
-     [:meta {:charset "utf-8"}]
-     [:title "PoC | Clojure"]]
-    [:body
-     [:h1 "Not Found."]
-     [:p "The page you requested could not be found. Go back to " (elem/link-to "/" "Home") "."]]))
+  (layout
+    [:h1 "Not Found."]
+    [:p "The page you requested could not be found. Go back to " (elem/link-to "/" "Home") "."]))
 
 (defroutes api-routes
   (GET "/" [] api-index-handler)
